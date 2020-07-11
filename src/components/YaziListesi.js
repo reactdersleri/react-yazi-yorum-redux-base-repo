@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { api } from "../api";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { yaziListesiGetir } from "../actions";
 
 const YaziListesi = (props) => {
-  const [yaziListesi, setYaziListesi] = useState([]);
+  const yaziListesi = useSelector((state) => state.yaziListesi);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    api()
-      .get("/posts")
-      .then((response) => {
-        setYaziListesi(response.data);
-      });
+    dispatch(yaziListesiGetir());
   }, []);
 
   return (
@@ -30,7 +28,7 @@ const YaziListesi = (props) => {
             </div>
           </div>
         );
-      })}{" "}
+      })}
     </div>
   );
 };

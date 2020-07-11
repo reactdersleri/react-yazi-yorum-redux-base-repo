@@ -19,7 +19,7 @@ const YaziFormu = (props) => {
     event.preventDefault();
     setHata("");
 
-    if (props.yazi.title) {
+    if (props.yazi?.title) {
       api()
         .put(`/posts/${id}`, yazi)
         .then((response) => {
