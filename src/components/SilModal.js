@@ -1,24 +1,20 @@
 import React, { useState } from "react";
 import { Button, Modal } from "semantic-ui-react";
 import { api } from "../api";
+import { useDispatch, useSelector } from "react-redux";
+import { yaziSil } from "../actions";
+import { useHistory } from "react-router-dom";
 
-const SilModal = ({ yazi, push }) => {
+const SilModal = ({ yazi }) => {
   const [open, setOpen] = useState(false);
-  const [hata, setHata] = useState("");
+  const hata = useSelector((state) => state.yaziSilHata);
   const show = () => setOpen(true);
   const close = () => setOpen(false);
+  const { push } = useHistory();
+  const dispatch = useDispatch();
 
   const handleDelete = (id) => {
-    api()
-      .delete(`/posts/${id}`)
-      .then(() => {
-        setHata("");
-        close();
-        push(`/`);
-      })
-      .catch(() => {
-        setHata("Yazıyı silerken hata oluştu.");
-      });
+    dispatch(yaziSil(id, close, push));
   };
 
   return (
